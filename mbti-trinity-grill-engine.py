@@ -5,7 +5,7 @@ from autogen_core.models import ModelFamily
 from autogen_core.models import UserMessage, AssistantMessage
 
 # ==========================
-# 1. 終端機顏色與打字機工具
+# 1.終端機與打字機工具顏色設定
 # ==========================
 class Color:
     MAGENTA = "\033[35m"  # 🟪 Go哥 (ENTP)
@@ -15,7 +15,7 @@ class Color:
     RESET = "\033[0m"
 
 async def type_writer(text, delay=0.012):
-    """模擬真人打字機效果，逐字輸出"""
+    """打字機效果"""
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
@@ -29,7 +29,7 @@ def print_divider():
     print(Color.RESET + "-" * 50)
 
 # ==========================
-# 2. 初始化 LM Studio 連線
+# 2.初始化 LM Studio 連線(本模型system prompt是針對hermes-3-llama-3.1-8b，請注意自身的主機規格)
 # ==========================
 model_client = OpenAIChatCompletionClient(
     model="hermes-3-llama-3.1-8b",
@@ -45,7 +45,7 @@ model_client = OpenAIChatCompletionClient(
 )
 
 # ==========================
-# 3. 三大黃金光譜導師設定 (強制中文防護網)
+# 3.三大mbti導師設定 (強制中文)
 # ==========================
 agents_config = {
     "Go_Brother": {
@@ -102,11 +102,11 @@ async def call_agent(agent_key: str, current_prompt: str) -> str:
     return reply_text
 
 # ==========================
-# 4. 主執行迴圈
+# 4.主執行迴圈
 # ==========================
 async def main():
     print_separator()
-    print(Color.RESET + "🔥【AI Panel: 多維度導師 Grill me 萬用對抗引擎】🔥")
+    print(Color.RESET + "🔥【三個導師輪流轟炸 Grill me 萬用對抗討論引擎】🔥")
     print_separator()
 
     print(f"{Color.CYAN}👉 請輸入或「整段貼上」妳想被導師群拷問的任何議題、架構或人生難題：")
@@ -133,7 +133,7 @@ async def main():
     print(f"{Color.CYAN}🩵 挑戰者提供的議題：\n{user_topic}{Color.RESET}")
     print_separator()
 
-    # 讓三位導師展開 6 輪精彩對抗
+    # 讓三位不同mbti導師展開6輪精彩對抗討論(可以改，不一定要6輪)
     rounds = 6
     last_speaker = "User"
     last_message = user_topic
@@ -161,7 +161,7 @@ async def main():
         await asyncio.sleep(0.5)
 
     print_separator()
-    print(Color.RESET + "✨ 導師群拷問告一段落，感謝您的使用 ✨")
+    print(Color.RESET + "✨🩵💜💙💚導師群靈魂討論告一段落，感謝您的使用🩵💜💙💚✨")
     print_separator()
 
 if __name__ == "__main__":
